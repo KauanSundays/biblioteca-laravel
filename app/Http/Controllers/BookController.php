@@ -48,4 +48,13 @@ class BookController extends Controller
     {
         $favoriteBooks = Book::where('is_favorite', true)->get();
         return view('favorites', compact('favoriteBooks'));
-    }}
+    }
+
+    public function destroy($id)
+    {
+        $book = Book::findOrFail($id);
+        $book->delete();
+
+        return redirect()->route('books.index')->with('success', 'Livro excluído com sucesso.');
+    }
+}    

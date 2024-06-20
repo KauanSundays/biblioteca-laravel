@@ -29,6 +29,9 @@
             <button class="favorite-button text-red-500" data-book-id="{{ $book->id }}" data-favorite="{{ $book->is_favorite ? 'true' : 'false' }}">
               <i class="{{ $book->is_favorite ? 'bi bi-heart-fill' : 'bi bi-heart' }}"></i>
             </button>            
+            <button class="delete-button text-red-500" data-book-id="{{ $book->id }}">
+              <i class="bi bi-trash"></i>            
+            </button>            
           </div>
         @endforeach
       </div>
@@ -42,46 +45,69 @@
   </div>
 
   @include('modal')
+  @include('modal-excluir')
 
   <script>
-      document.querySelectorAll('.favorite-button').forEach(button => {
-      button.addEventListener('click', function() {
-        const bookId = this.getAttribute('data-book-id');
-        const isFavorite = this.getAttribute('data-favorite') === 'true';
+    document.querySelectorAll('.favorite-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const bookId = this.getAttribute('data-book-id');
+            const isFavorite = this.getAttribute('data-favorite') === 'true';
 
-        fetch(`/books/${bookId}/toggle-favorite`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-          },
-          body: JSON.stringify({
-            is_favorite: !isFavorite
-          })
-        })
-        .then(response => {
-          if (response.ok) {
-            this.setAttribute('data-favorite', (!isFavorite).toString());
+            // Lógica para favoritar/desfavoritar o livro aqui
+            fetch(`/books/${bookId}/toggle-favorite`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    is_favorite: !isFavorite
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    this.setAttribute('data-favorite', (!isFavorite).toString());
 
-            const icon = this.querySelector('i');
-            if (isFavorite) {
-              icon.classList.remove('bi-heart-fill');
-              icon.classList.add('bi-heart');
-            } else {
-              icon.classList.remove('bi-heart');
-              icon.classList.add('bi-heart-fill');
-            }
-          }
-        })
-        .catch(error => console.error('Erro ao atualizar favorito:', error));
-      });
+                    const icon = this.querySelector('i');
+                    if (isFavorite) {
+                        icon.classList.remove('bi-heart-fill');
+                        icon.classList.add('bi-heart');
+                    } else {
+                        icon.classList.remove('bi-heart');
+                        icon.classList.add('bi-heart-fill');
+                    }
+                }
+            })
+            .catch(error => console.error('Erro ao atualizar favorito:', error));
+        });
+    });
+
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const bookId = this.getAttribute('data-book-id');
+
+            // Abrir modal de exclusão
+            document.getElementById('modal-excluir').classList.remove('hidden');
+
+            // Configurar ação de exclusão no formulário
+            const form = document.getElementById('form-excluir');
+            form.action = `/books/${bookId}/delete`;
+
+            // Cancelar ação padrão de clicar no botão
+            return false;
+        });
     });
 
     document.getElementById('addButton').addEventListener('click', function() {
-      document.getElementById('modal').classList.remove('hidden');
+        document.getElementById('modal').classList.remove('hidden');
     });
+
     document.getElementById('closeModal').addEventListener('click', function() {
-      document.getElementById('modal').classList.add('hidden');
+        document.getElementById('modal').classList.add('hidden');
+    });
+
+    document.getElementById('cancelarExclusao').addEventListener('click', function() {
+        document.getElementById('modal-excluir').classList.add('hidden');
     });
   </script>
 </body>
