@@ -13,6 +13,9 @@
     <h1 class="text-2xl font-bold">Biblioteca</h1>
   </header>
   <div class="flex justify-end p-4">
+    <button id="addButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+      Adicionar
+    </button>
     <a href="{{ route('books.favorites') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
       Favoritos
     </a>
@@ -38,11 +41,6 @@
     </div>
   </main>
   
-  <div class="flex justify-end p-4">
-    <button id="addButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-      Adicionar
-    </button>
-  </div>
 
   @include('modal')
   @include('modal-excluir')
@@ -53,7 +51,6 @@
             const bookId = this.getAttribute('data-book-id');
             const isFavorite = this.getAttribute('data-favorite') === 'true';
 
-            // Lógica para favoritar/desfavoritar o livro aqui
             fetch(`/books/${bookId}/toggle-favorite`, {
                 method: 'POST',
                 headers: {
@@ -86,14 +83,11 @@
         button.addEventListener('click', function() {
             const bookId = this.getAttribute('data-book-id');
 
-            // Abrir modal de exclusão
             document.getElementById('modal-excluir').classList.remove('hidden');
 
-            // Configurar ação de exclusão no formulário
             const form = document.getElementById('form-excluir');
             form.action = `/books/${bookId}/delete`;
 
-            // Cancelar ação padrão de clicar no botão
             return false;
         });
     });
