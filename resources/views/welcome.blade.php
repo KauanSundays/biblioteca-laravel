@@ -24,9 +24,21 @@
   </main>
   
   <div class="flex justify-end p-4">
-    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+    <button id="addButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
       Adicionar
     </button>
   </div>
+
+  @include('modal')
+
+  <script>
+    document.getElementById('addButton').addEventListener('click', function() {
+      document.getElementById('modal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeModal').addEventListener('click', function() {
+      document.getElementById('modal').classList.add('hidden');
+    });
+  </script>
 </body>
 </html>
