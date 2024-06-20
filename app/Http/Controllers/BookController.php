@@ -30,4 +30,11 @@ class BookController extends Controller
 
         return redirect()->route('books.index');
     }
+
+    public function toggleFavorite(Request $request, $id)
+    {
+        $book = Book::findOrFail($id);
+        $book->is_favorite = !$book->is_favorite;
+        $book->save();
+    }
 }
