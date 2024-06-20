@@ -43,4 +43,9 @@ class BookController extends Controller
         $books = Book::all();
         return response()->json($books);
     }
-}
+
+    public function favorites()
+    {
+        $favoriteBooks = Book::where('is_favorite', true)->get();
+        return view('favorites', compact('favoriteBooks'));
+    }}
