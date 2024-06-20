@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Tests\\Feature\\BookControllerTest::test_all_books_are_returned":7,"Tests\\Feature\\BookControllerTest::all_books_are_returned":7},"times":{"Tests\\Feature\\BookControllerTest::test_all_books_are_returned":1.177,"Tests\\Feature\\BookControllerTest::all_books_are_returned":0.131}}

@@ -37,4 +37,10 @@ class BookController extends Controller
         $book->is_favorite = !$book->is_favorite;
         $book->save();
     }
+
+    public function indexJson()
+    {
+        $books = Book::all();
+        return response()->json($books);
+    }
 }
