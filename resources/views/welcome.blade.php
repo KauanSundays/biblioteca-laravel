@@ -14,16 +14,15 @@
   
   <main class="flex-grow p-4">
     <div class="bg-white p-6 rounded shadow">
-      <h2 class="text-xl font-semibold mb-4">Livros Cadastrados</h2>
-      <ul class="space-y-2">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         @foreach($books as $book)
-          <li class="bg-gray-100 p-4 rounded shadow-sm">
+          <div class="bg-gray-100 p-4 rounded shadow-sm">
+            <img src="{{ $book->image_url }}" alt="{{ $book->title }}" class="w-full h-auto max-h-48 object-cover mb-4">
             <h3 class="font-bold">{{ $book->title }}</h3>
             <p>{{ $book->description }}</p>
-            <img src="{{ $book->image_url }}" alt="{{ $book->title }}" class="mt-2">
-          </li>
+          </div>
         @endforeach
-      </ul>
+      </div>
     </div>
   </main>
   
