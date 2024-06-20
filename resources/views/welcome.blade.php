@@ -16,9 +16,13 @@
     <div class="bg-white p-6 rounded shadow">
       <h2 class="text-xl font-semibold mb-4">Livros Cadastrados</h2>
       <ul class="space-y-2">
-        <li class="bg-gray-100 p-4 rounded shadow-sm">Livro 1</li>
-        <li class="bg-gray-100 p-4 rounded shadow-sm">Livro 2</li>
-        <li class="bg-gray-100 p-4 rounded shadow-sm">Livro 3</li>
+        @foreach($books as $book)
+          <li class="bg-gray-100 p-4 rounded shadow-sm">
+            <h3 class="font-bold">{{ $book->title }}</h3>
+            <p>{{ $book->description }}</p>
+            <img src="{{ $book->image_url }}" alt="{{ $book->title }}" class="mt-2">
+          </li>
+        @endforeach
       </ul>
     </div>
   </main>
